@@ -9,8 +9,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController _pageController = PageController(initialPage: 0);
+  PageController pageController = PageController(initialPage: 0);
   int currentPage = 0;
+
+  Widget _indicator(bool isActived) {
+    return AnimatedContainer(
+      duration: Duration(microseconds: 300),
+      height: 10,
+      width: isActived ? 20 : 8,
+      margin: EdgeInsets.only(right: 5),
+      color: Constant.primaryColor,
+    );
+  }
+
+  List<Widget> _createIndicator() {
+    List<Widget> _list = [];
+    for (int i = 0; i < 3; i++) {
+      bool isPageActive = currentPage == i ? true : false;
+      if (isPageActive == true) {
+        _list.add(_indicator(true));
+      } else {
+        _list.add(_indicator(false));
+      }
+    }
+    return _list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,52 +63,80 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: <Widget>[
           PageView(
-            controller: _pageController,
+            controller: pageController,
             onPageChanged: (value) {
               setState(() {
                 currentPage = value;
               });
             },
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 350,
-                      child: Image.asset(
-                        'assets/images/plant-one.png',
-                        height: 300,
-                        width: 300,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      Constant.titleOne,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "yekan",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color: Constant.primaryColor,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      textAlign: TextAlign.center,
-                      Constant.descriptionOne,
-                      style: TextStyle(
-                        fontFamily: "iransans",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 20,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
+            children: <Widget>[
+              CreatePage(
+                imageAdress: 'assets/images/plant-one.png',
+                title: Constant.titleOne,
+                description: Constant.descriptionOne,
+              ),
+              CreatePage(
+                imageAdress: 'assets/images/plant-two.png',
+                title: Constant.titleTwo,
+                description: Constant.descriptionTwo,
+              ),
+              CreatePage(
+                imageAdress: 'assets/images/plant-three.png',
+                title: Constant.titleThree,
+                description: Constant.descriptionThree,
               ),
             ],
+          ),
+          Row(children: _createIndicator()),
+        ],
+      ),
+    );
+  }
+}
+
+class CreatePage extends StatelessWidget {
+  final String imageAdress;
+  final String title;
+  final String description;
+  const CreatePage({
+    super.key,
+    required this.imageAdress,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 50, right: 50),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 350,
+            child: Image.asset(imageAdress, height: 300, width: 300),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "yekan",
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+              color: Constant.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            textAlign: TextAlign.center,
+            description,
+            style: TextStyle(
+              fontFamily: "iransans",
+              fontWeight: FontWeight.w400,
+              fontSize: 20,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),
