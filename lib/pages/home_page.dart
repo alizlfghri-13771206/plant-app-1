@@ -46,19 +46,43 @@ class _HomePageState extends State<HomePage> {
               });
             },
             children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: 350,
-                    child: Image.asset(
-                      'assets/images/plant-one.png',
-                      height: 300,
-                      width: 300,
+              Padding(
+                padding: const EdgeInsets.only(left: 50, right: 50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 350,
+                      child: Image.asset(
+                        'assets/images/plant-one.png',
+                        height: 300,
+                        width: 300,
+                      ),
                     ),
-                  ),
-                  Text(Constant.titleOne),
-                  Text(Constant.descriptionOne),
-                ],
+                    const SizedBox(height: 10),
+                    Text(
+                      Constant.titleOne,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: "yekan",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Constant.primaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      textAlign: TextAlign.center,
+                      Constant.descriptionOne,
+                      style: TextStyle(
+                        fontFamily: "iransans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
